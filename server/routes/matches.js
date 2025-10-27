@@ -142,5 +142,38 @@ router.get('/job/:jobId/candidates', auth, async (req, res) => {
   }
 });
 
+// Get pending candidates for company to evaluate (who liked the company's jobs)
+router.get('/company/pending', auth, async (req, res) => {
+  try {
+    if (req.user.userType !== 'company') {
+      return res.status(403).json({ message: 'Only companies can access this' });
+    }
+
+    const matches = await Match.findAll({
+      where: {
+        candidateLiked: true,
+        matched: false
+      },
+      include: [
+        {
+          model: Job,
+          as: 'job',
+          where: { companyId: req.user.id },
+          attributes: ['id', 'title', 'description', 'location', 'workMode', 'salary']
+        },
+        {
+          model: User,
+          as: 'candidate',
+          attributes: ['id', 'firstName', 'lastName', 'photo', 'bio', 'location', 'email']
+        }
+      ]
+    });
+
+    res.json(matches);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = router;
 

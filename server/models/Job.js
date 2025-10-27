@@ -25,7 +25,7 @@ const Job = sequelize.define('Job', {
   },
   requirements: {
     type: DataTypes.TEXT,
-    allowNull: false
+    allowNull: true
   },
   salary: {
     type: DataTypes.STRING,
@@ -36,8 +36,8 @@ const Job = sequelize.define('Job', {
     defaultValue: null
   },
   workMode: {
-    type: DataTypes.ENUM('presencial', 'remoto', 'hibrido'),
-    defaultValue: 'presencial'
+    type: DataTypes.ENUM('presential', 'remote', 'hybrid'),
+    defaultValue: 'presential'
   },
   companyName: {
     type: DataTypes.STRING,

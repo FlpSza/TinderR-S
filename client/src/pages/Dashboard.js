@@ -269,7 +269,10 @@ function Dashboard() {
 
               {/* Avatar e Menu */}
               <IconButton onClick={handleProfileMenu} size="small">
-                <Avatar sx={{ width: 40, height: 40, bgcolor: '#FE4655' }}>
+                <Avatar 
+                  src={user?.photo} 
+                  sx={{ width: 40, height: 40, bgcolor: '#FE4655' }}
+                >
                   {user?.firstName?.charAt(0)}
                 </Avatar>
               </IconButton>
@@ -334,7 +337,7 @@ function Dashboard() {
                         boxShadow: '0 12px 24px rgba(0,0,0,0.15)'
                       }
                     }} 
-                    onClick={() => navigate('/swipe')}
+                    onClick={() => user?.userType === 'company' ? navigate('/evaluate') : navigate('/swipe')}
                   >
                     <CardContent sx={{ p: 4 }}>
                       <Box sx={{ 
@@ -407,7 +410,7 @@ function Dashboard() {
                         boxShadow: '0 12px 24px rgba(0,0,0,0.15)'
                       }
                     }} 
-                    onClick={() => navigate('/swipe')}
+                    onClick={() => user?.userType === 'company' ? navigate('/evaluate') : navigate('/swipe')}
                   >
                     <CardContent sx={{ p: 4 }}>
                       <Box sx={{ 

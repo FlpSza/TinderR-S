@@ -122,6 +122,18 @@
     "title": "Chat",
     "typeMessage": "Type your message...",
     "send": "Send"
+  },
+  "jobCreate": {
+    "title": "Job Title",
+    "description": "Description",
+    "salary": "Salary",
+    "requirements": "Requirements",
+    "requirementsPlaceholder": "Ex: 3 years of experience, knowledge in..."
+  },
+  "evaluate": {
+    "noMoreCandidates": "No more candidates to evaluate",
+    "noBio": "No description",
+    "candidateFor": "Candidate for"
   }
 }
 

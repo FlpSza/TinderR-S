@@ -12,6 +12,8 @@ import Matches from './pages/Matches';
 import Chat from './pages/Chat';
 import Profile from './pages/Profile';
 import Notifications from './pages/Notifications';
+import JobCreate from './pages/JobCreate';
+import EvaluateCandidates from './pages/EvaluateCandidates';
 import { AuthContext } from './context/AuthContext';
 import { I18nProvider } from './i18n';
 
@@ -82,10 +84,12 @@ function App() {
               <Route path="/register" element={!user ? <Register /> : <Navigate to="/" />} />
               <Route path="/" element={user ? <Dashboard /> : <Navigate to="/login" />} />
               <Route path="/swipe" element={user ? <Swipe /> : <Navigate to="/login" />} />
+              <Route path="/evaluate" element={user?.userType === 'company' ? <EvaluateCandidates /> : <Navigate to="/" />} />
               <Route path="/matches" element={user ? <Matches /> : <Navigate to="/login" />} />
               <Route path="/chat/:matchId" element={user ? <Chat /> : <Navigate to="/login" />} />
               <Route path="/profile" element={user ? <Profile /> : <Navigate to="/login" />} />
               <Route path="/notifications" element={user ? <Notifications /> : <Navigate to="/login" />} />
+              <Route path="/job/create" element={user ? <JobCreate /> : <Navigate to="/login" />} />
             </Routes>
           </Router>
         </AuthContext.Provider>

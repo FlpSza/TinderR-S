@@ -77,6 +77,51 @@
     "newMessageCompany": "Nova mensagem de",
     "newMessageCandidate": "Nova mensagem de",
     "companyMatches": "Veja seus matches com candidatos"
+  },
+  "profile": {
+    "title": "Meu Perfil",
+    "myProfile": "Meu Perfil",
+    "firstName": "Nome",
+    "lastName": "Sobrenome",
+    "email": "Email",
+    "bio": "Bio",
+    "location": "Localização",
+    "phone": "Telefone",
+    "notInformed": "Não informado",
+    "editProfile": "Editar Perfil",
+    "myJobs": "Minhas Vagas",
+    "createJob": "Criar Vaga",
+    "noJobs": "Nenhuma vaga criada ainda",
+    "deleteConfirm": "Tem certeza que deseja deletar esta vaga?",
+    "cancel": "Cancelar",
+    "save": "Salvar",
+    "close": "Fechar",
+    "upload": "Enviar",
+    "cancelUpload": "Cancelar"
+  },
+  "swipe": {
+    "noMoreJobs": "Não há mais vagas disponíveis",
+    "backToHome": "Voltar ao início",
+    "salary": "Salário",
+    "location": "Localização",
+    "workMode": "Modalidade",
+    "combine": "A combinar",
+    "notSpecified": "Não especificado",
+    "presential": "Presencial",
+    "remote": "Remoto",
+    "hybrid": "Híbrido"
+  },
+  "matches": {
+    "title": "Seus Matches",
+    "noMatches": "Ainda não há matches",
+    "noMatchesDesc": "Continue deslizando para encontrar matches!",
+    "exploreJobs": "Explorar vagas",
+    "conversation": "Conversar"
+  },
+  "chat": {
+    "title": "Chat",
+    "typeMessage": "Digite sua mensagem...",
+    "send": "Enviar"
   }
 }
 

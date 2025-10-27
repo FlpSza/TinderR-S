@@ -12,9 +12,11 @@ import {
 } from '@mui/material';
 import { Close, Favorite, ArrowBack } from '@mui/icons-material';
 import axios from 'axios';
+import { useTranslation } from '../i18n';
 
 function Swipe() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [jobs, setJobs] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -73,10 +75,10 @@ function Swipe() {
       <Container maxWidth="sm">
         <Box sx={{ py: 4, textAlign: 'center' }}>
           <Typography variant="h5" gutterBottom>
-            Não há mais vagas disponíveis 😢
+            {t('swipe.noMoreJobs')} 😢
           </Typography>
           <Button onClick={() => navigate('/')} sx={{ mt: 2 }}>
-            Voltar ao início
+            {t('swipe.backToHome')}
           </Button>
         </Box>
       </Container>
@@ -126,13 +128,15 @@ function Swipe() {
             </Box>
             <CardContent>
               <Typography variant="body2" color="text.secondary" gutterBottom>
-                💰 {currentJob.salary || 'A combinar'}
+                💰 {currentJob.salary || t('swipe.combine')}
               </Typography>
               <Typography variant="body2" color="text.secondary" gutterBottom>
-                📍 {currentJob.location || 'Não especificado'}
+                📍 {currentJob.location || t('swipe.notSpecified')}
               </Typography>
               <Typography variant="body2" color="text.secondary" gutterBottom>
-                💼 {currentJob.workMode || 'Presencial'}
+                💼 {currentJob.workMode === 'remote' ? t('swipe.remote') :
+                     currentJob.workMode === 'hybrid' ? t('swipe.hybrid') :
+                     t('swipe.presential')}
               </Typography>
               <Typography variant="body2" sx={{ mt: 2 }}>
                 {currentJob.description?.substring(0, 150)}...

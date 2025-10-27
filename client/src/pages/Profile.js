@@ -19,10 +19,13 @@ import {
 import { ArrowBack, Edit, Delete } from '@mui/icons-material';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
+import PhotoUpload from '../components/PhotoUpload';
+import { useTranslation } from '../i18n';
 
 function Profile() {
   const { user, login } = useContext(AuthContext);
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [profile, setProfile] = useState(null);
   const [jobs, setJobs] = useState([]);
   const [editDialog, setEditDialog] = useState(false);
@@ -54,6 +57,17 @@ function Profile() {
     }
   };
 
+  const handlePhotoUpload = async (photoUrl) => {
+    try {
+      const response = await axios.put('/users/me', { ...editData, photo: photoUrl });
+      setProfile(response.data);
+      setEditData(response.data);
+      login(localStorage.getItem('token'), response.data);
+    } catch (error) {
+      console.error('Error updating photo:', error);
+    }
+  };
+
   const handleUpdateProfile = async () => {
     try {
       const response = await axios.put('/users/me', editData);
@@ -66,7 +80,7 @@ function Profile() {
   };
 
   const handleDeleteJob = async (jobId) => {
-    if (window.confirm('Tem certeza que deseja deletar esta vaga?')) {
+    if (window.confirm(t('profile.deleteConfirm'))) {
       try {
         await axios.delete(`/jobs/${jobId}`);
         fetchJobs();
@@ -88,7 +102,7 @@ function Profile() {
             <ArrowBack />
           </IconButton>
           <Typography variant="h4" sx={{ color: '#ff4458', fontWeight: 'bold' }}>
-            Meu Perfil
+            {t('profile.myProfile')}
           </Typography>
         </Box>
 
@@ -97,12 +111,10 @@ function Profile() {
             <Card>
               <CardContent>
                 <Box sx={{ textAlign: 'center', mb: 3 }}>
-                  <Avatar
-                    src={profile.photo}
-                    sx={{ width: 120, height: 120, mx: 'auto', mb: 2 }}
-                  >
-                    {profile.firstName?.charAt(0)}
-                  </Avatar>
+                  <PhotoUpload
+                    currentPhoto={profile.photo}
+                    onPhotoUpload={handlePhotoUpload}
+                  />
                   <Typography variant="h5">
                     {profile.firstName} {profile.lastName}
                   </Typography>
@@ -114,18 +126,18 @@ function Profile() {
                     onClick={() => setEditDialog(true)}
                     sx={{ mt: 2 }}
                   >
-                    Editar Perfil
+                    {t('profile.editProfile')}
                   </Button>
                 </Box>
 
                 <Typography variant="body2" color="text.secondary" gutterBottom>
-                  <strong>Bio:</strong> {profile.bio || 'Não informado'}
+                  <strong>{t('profile.bio')}:</strong> {profile.bio || t('profile.notInformed')}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" gutterBottom>
-                  <strong>Localização:</strong> {profile.location || 'Não informado'}
+                  <strong>{t('profile.location')}:</strong> {profile.location || t('profile.notInformed')}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  <strong>Tipo:</strong> {profile.userType === 'candidate' ? 'Candidato' : 'Empresa'}
+                  <strong>Tipo:</strong> {profile.userType === 'candidate' ? t('register.candidate') : t('register.company')}
                 </Typography>
               </CardContent>
             </Card>
@@ -135,19 +147,19 @@ function Profile() {
             {user?.userType === 'company' && (
               <>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-                  <Typography variant="h6">Minhas Vagas</Typography>
+                  <Typography variant="h6">{t('dashboard.myJobs')}</Typography>
                   <Button
                     variant="contained"
                     onClick={() => navigate('/job/create')}
                     sx={{ bgcolor: '#ff4458' }}
                   >
-                    Criar Vaga
+                    {t('profile.createJob')}
                   </Button>
                 </Box>
 
                 {jobs.length === 0 ? (
                   <Typography color="text.secondary">
-                    Nenhuma vaga criada ainda
+                    {t('profile.noJobs')}
                   </Typography>
                 ) : (
                   <Grid container spacing={2}>
@@ -182,25 +194,25 @@ function Profile() {
 
         {/* Edit Dialog */}
         <Dialog open={editDialog} onClose={() => setEditDialog(false)} maxWidth="sm" fullWidth>
-          <DialogTitle>Editar Perfil</DialogTitle>
+          <DialogTitle>{t('profile.editProfile')}</DialogTitle>
           <DialogContent>
             <TextField
               fullWidth
-              label="Nome"
+              label={t('profile.firstName')}
               value={editData.firstName || ''}
               onChange={(e) => setEditData({ ...editData, firstName: e.target.value })}
               margin="normal"
             />
             <TextField
               fullWidth
-              label="Sobrenome"
+              label={t('profile.lastName')}
               value={editData.lastName || ''}
               onChange={(e) => setEditData({ ...editData, lastName: e.target.value })}
               margin="normal"
             />
             <TextField
               fullWidth
-              label="Bio"
+              label={t('profile.bio')}
               multiline
               rows={3}
               value={editData.bio || ''}
@@ -209,23 +221,23 @@ function Profile() {
             />
             <TextField
               fullWidth
-              label="Localização"
+              label={t('profile.location')}
               value={editData.location || ''}
               onChange={(e) => setEditData({ ...editData, location: e.target.value })}
               margin="normal"
             />
             <TextField
               fullWidth
-              label="Telefone"
+              label={t('profile.phone')}
               value={editData.phone || ''}
               onChange={(e) => setEditData({ ...editData, phone: e.target.value })}
               margin="normal"
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => setEditDialog(false)}>Cancelar</Button>
+            <Button onClick={() => setEditDialog(false)}>{t('profile.cancel')}</Button>
             <Button onClick={handleUpdateProfile} variant="contained" sx={{ bgcolor: '#ff4458' }}>
-              Salvar
+              {t('profile.save')}
             </Button>
           </DialogActions>
         </Dialog>

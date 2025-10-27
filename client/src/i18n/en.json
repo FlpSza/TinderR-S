@@ -77,6 +77,51 @@
     "newMessageCompany": "New message from",
     "newMessageCandidate": "New message from",
     "companyMatches": "See your matches with candidates"
+  },
+  "profile": {
+    "title": "My Profile",
+    "myProfile": "My Profile",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "bio": "Bio",
+    "location": "Location",
+    "phone": "Phone",
+    "notInformed": "Not informed",
+    "editProfile": "Edit Profile",
+    "myJobs": "My Jobs",
+    "createJob": "Create Job",
+    "noJobs": "No jobs created yet",
+    "deleteConfirm": "Are you sure you want to delete this job?",
+    "cancel": "Cancel",
+    "save": "Save",
+    "close": "Close",
+    "upload": "Upload",
+    "cancelUpload": "Cancel"
+  },
+  "swipe": {
+    "noMoreJobs": "No more jobs available",
+    "backToHome": "Back to home",
+    "salary": "Salary",
+    "location": "Location",
+    "workMode": "Work Mode",
+    "combine": "To be negotiated",
+    "notSpecified": "Not specified",
+    "presential": "In-person",
+    "remote": "Remote",
+    "hybrid": "Hybrid"
+  },
+  "matches": {
+    "title": "Your Matches",
+    "noMatches": "No matches yet",
+    "noMatchesDesc": "Keep swiping to find matches!",
+    "exploreJobs": "Explore Jobs",
+    "conversation": "Chat"
+  },
+  "chat": {
+    "title": "Chat",
+    "typeMessage": "Type your message...",
+    "send": "Send"
   }
 }
 

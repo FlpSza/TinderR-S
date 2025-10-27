@@ -33,3 +33,7 @@ yarn-error.log*
 logs
 *.log
 
+# Uploads (manter .gitkeep mas ignorar arquivos)
+server/uploads/*
+!server/uploads/.gitkeep
+

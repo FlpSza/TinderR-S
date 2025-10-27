@@ -13,6 +13,7 @@ import { ArrowBack, Send } from '@mui/icons-material';
 import axios from 'axios';
 import io from 'socket.io-client';
 import { AuthContext } from '../context/AuthContext';
+import { useTranslation } from '../i18n';
 
 const socket = io('http://localhost:5000');
 
@@ -20,6 +21,7 @@ function Chat() {
   const { matchId } = useParams();
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const messagesEndRef = useRef(null);
@@ -83,7 +85,7 @@ function Chat() {
             <ArrowBack />
           </IconButton>
           <Typography variant="h6" sx={{ ml: 2 }}>
-            Chat
+            {t('chat.title')}
           </Typography>
         </Box>
 
@@ -127,7 +129,7 @@ function Chat() {
         <Box sx={{ display: 'flex', gap: 1, mt: 2 }}>
           <TextField
             fullWidth
-            placeholder="Digite sua mensagem..."
+            placeholder={t('chat.typeMessage')}
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && sendMessage()}

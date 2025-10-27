@@ -15,10 +15,12 @@ import {
 import { ArrowBack, Chat } from '@mui/icons-material';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
+import { useTranslation } from '../i18n';
 
 function Matches() {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [matches, setMatches] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -53,24 +55,24 @@ function Matches() {
             <ArrowBack />
           </IconButton>
           <Typography variant="h4" sx={{ color: '#ff4458', fontWeight: 'bold' }}>
-            Seus Matches 💕
+            {t('matches.title')} 💕
           </Typography>
         </Box>
 
         {matches.length === 0 ? (
           <Box sx={{ textAlign: 'center', py: 8 }}>
             <Typography variant="h6" color="text.secondary">
-              Ainda não há matches 😢
+              {t('matches.noMatches')} 😢
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-              Continue deslizando para encontrar matches!
+              {t('matches.noMatchesDesc')}
             </Typography>
             <Button
               onClick={() => navigate('/swipe')}
               variant="contained"
               sx={{ mt: 3, bgcolor: '#ff4458' }}
             >
-              Explorar vagas
+              {t('matches.exploreJobs')}
             </Button>
           </Box>
         ) : (
@@ -107,7 +109,7 @@ function Matches() {
                           onClick={() => navigate(`/chat/${match.id}`)}
                           sx={{ bgcolor: '#ff4458' }}
                         >
-                          Conversar
+                          {t('matches.conversation')}
                         </Button>
                       </>
                     ) : (
@@ -138,7 +140,7 @@ function Matches() {
                           onClick={() => navigate(`/chat/${match.id}`)}
                           sx={{ bgcolor: '#ff4458' }}
                         >
-                          Conversar
+                          {t('matches.conversation')}
                         </Button>
                       </>
                     )}

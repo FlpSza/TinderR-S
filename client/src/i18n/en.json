@@ -64,7 +64,19 @@
     "myJobs": "My Jobs",
     "myJobsDesc": "Manage your job postings",
     "profile": "Profile",
-    "logout": "Logout"
+    "logout": "Logout",
+    "activeJobs": "Active Jobs",
+    "matchesCount": "Matches",
+    "candidates": "Candidates",
+    "settings": "Settings",
+    "notifications": "Notifications",
+    "noNotifications": "No notifications",
+    "viewAll": "View all notifications",
+    "newMatchCompany": "New match with",
+    "newMatchCandidate": "You matched with",
+    "newMessageCompany": "New message from",
+    "newMessageCandidate": "New message from",
+    "companyMatches": "See your matches with candidates"
   }
 }
 

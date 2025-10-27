@@ -11,6 +11,7 @@ import Swipe from './pages/Swipe';
 import Matches from './pages/Matches';
 import Chat from './pages/Chat';
 import Profile from './pages/Profile';
+import Notifications from './pages/Notifications';
 import { AuthContext } from './context/AuthContext';
 import { I18nProvider } from './i18n';
 
@@ -84,6 +85,7 @@ function App() {
               <Route path="/matches" element={user ? <Matches /> : <Navigate to="/login" />} />
               <Route path="/chat/:matchId" element={user ? <Chat /> : <Navigate to="/login" />} />
               <Route path="/profile" element={user ? <Profile /> : <Navigate to="/login" />} />
+              <Route path="/notifications" element={user ? <Notifications /> : <Navigate to="/login" />} />
             </Routes>
           </Router>
         </AuthContext.Provider>

@@ -64,7 +64,19 @@
     "myJobs": "Minhas Vagas",
     "myJobsDesc": "Gerencie suas vagas de emprego",
     "profile": "Perfil",
-    "logout": "Sair"
+    "logout": "Sair",
+    "activeJobs": "Vagas Ativas",
+    "matchesCount": "Matches",
+    "candidates": "Candidatos",
+    "settings": "Configurações",
+    "notifications": "Notificações",
+    "noNotifications": "Nenhuma notificação",
+    "viewAll": "Ver todas as notificações",
+    "newMatchCompany": "Novo match com",
+    "newMatchCandidate": "Você teve um match com",
+    "newMessageCompany": "Nova mensagem de",
+    "newMessageCandidate": "Nova mensagem de",
+    "companyMatches": "Veja seus matches com candidatos"
   }
 }
 

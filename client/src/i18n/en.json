@@ -76,7 +76,8 @@
     "newMatchCandidate": "You matched with",
     "newMessageCompany": "New message from",
     "newMessageCandidate": "New message from",
-    "companyMatches": "See your matches with candidates"
+    "companyMatches": "See your matches with candidates",
+    "markAllAsRead": "Mark all as read"
   },
   "profile": {
     "title": "My Profile",

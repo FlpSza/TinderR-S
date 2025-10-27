@@ -38,6 +38,10 @@ const Match = sequelize.define('Match', {
   matchedAt: {
     type: DataTypes.DATE,
     defaultValue: null
+  },
+  read: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
   }
 });
 

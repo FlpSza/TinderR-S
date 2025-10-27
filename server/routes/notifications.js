@@ -39,8 +39,9 @@ router.get('/', auth, async (req, res) => {
           message: `${match.candidate.firstName} ${match.candidate.lastName}`,
           fullMessage: `Novo match com ${match.candidate.firstName} ${match.candidate.lastName}`,
           time: getTimeAgo(match.matchedAt),
-          read: false,
-          jobId: match.jobId
+          read: match.read || false,
+          jobId: match.jobId,
+          matchId: match.id
         });
       });
 
@@ -112,8 +113,9 @@ router.get('/', auth, async (req, res) => {
           message: `${match.job.companyName}`,
           fullMessage: `Você teve um match com ${match.job.companyName}`,
           time: getTimeAgo(match.matchedAt),
-          read: false,
-          jobId: match.jobId
+          read: match.read || false,
+          jobId: match.jobId,
+          matchId: match.id
         });
       });
 
@@ -179,6 +181,105 @@ function getTimeAgo(date) {
   if (hours < 24) return `Há ${hours} hora${hours > 1 ? 's' : ''}`;
   return `Há ${days} dia${days > 1 ? 's' : ''}`;
 }
+
+// Mark notification as read
+router.post('/:id/read', auth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const notificationType = id.startsWith('msg_') ? 'message' : 'match';
+    
+    if (notificationType === 'message') {
+      const messageId = id.replace('msg_', '');
+      await Message.update(
+        { read: true },
+        { where: { id: messageId } }
+      );
+    } else {
+      // Marcar match como lido
+      await Match.update(
+        { read: true },
+        { where: { id: id } }
+      );
+    }
+    
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Mark all notifications as read
+router.post('/read-all', auth, async (req, res) => {
+  try {
+    if (req.user.userType === 'company') {
+      // Marcar todas as mensagens das vagas da empresa como lidas
+      const matches = await Match.findAll({
+        include: [{
+          model: Job,
+          as: 'job',
+          where: { companyId: req.user.id }
+        }]
+      });
+      
+      const matchIds = matches.map(m => m.id);
+      
+      if (matchIds.length > 0) {
+        await Message.update(
+          { read: true },
+          { 
+            where: { 
+              matchId: { [Op.in]: matchIds },
+              senderId: { [Op.ne]: req.user.id }
+            }
+          }
+        );
+        
+        // Marcar matches como lidos
+        await Match.update(
+          { read: true },
+          { 
+            where: { 
+              id: { [Op.in]: matchIds }
+            }
+          }
+        );
+      }
+    } else {
+      // Marcar todas as mensagens do candidato como lidas
+      const matches = await Match.findAll({
+        where: { candidateId: req.user.id }
+      });
+      
+      const matchIds = matches.map(m => m.id);
+      
+      if (matchIds.length > 0) {
+        await Message.update(
+          { read: true },
+          { 
+            where: { 
+              matchId: { [Op.in]: matchIds },
+              senderId: { [Op.ne]: req.user.id }
+            }
+          }
+        );
+        
+        // Marcar matches como lidos
+        await Match.update(
+          { read: true },
+          { 
+            where: { 
+              id: { [Op.in]: matchIds }
+            }
+          }
+        );
+      }
+    }
+    
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 module.exports = router;
 

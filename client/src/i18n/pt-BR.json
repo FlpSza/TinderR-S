@@ -76,7 +76,8 @@
     "newMatchCandidate": "Você teve um match com",
     "newMessageCompany": "Nova mensagem de",
     "newMessageCandidate": "Nova mensagem de",
-    "companyMatches": "Veja seus matches com candidatos"
+    "companyMatches": "Veja seus matches com candidatos",
+    "markAllAsRead": "Marcar todas como lidas"
   },
   "profile": {
     "title": "Meu Perfil",

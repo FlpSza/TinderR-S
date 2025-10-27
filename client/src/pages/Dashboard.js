@@ -27,7 +27,8 @@ import {
   Notifications,
   TrendingUp,
   BusinessCenter,
-  Settings
+  Settings,
+  CheckCircle as CheckCircleIcon
 } from '@mui/icons-material';
 import { AuthContext } from '../context/AuthContext';
 import { useTranslation } from '../i18n';
@@ -115,6 +116,18 @@ function Dashboard() {
       console.error('Error fetching notifications:', error);
       // Fallback para mock em caso de erro
       setNotifications([]);
+    }
+  };
+
+  const handleMarkAsRead = async (notificationId) => {
+    try {
+      await axios.post(`/notifications/${notificationId}/read`);
+      // Atualizar estado local
+      setNotifications(notifications.map(notif => 
+        notif.id === notificationId ? { ...notif, read: true } : notif
+      ));
+    } catch (error) {
+      console.error('Error marking notification as read:', error);
     }
   };
 
@@ -234,10 +247,21 @@ function Dashboard() {
                       key={notif.id}
                       onClick={() => {
                         setNotifMenu(null);
+                        // Navegar baseado no tipo de notificação
                         if (notif.type === 'match') {
-                          navigate('/matches');
+                          // Se tiver matchId, pode navegar para o chat ou matches
+                          if (notif.matchId) {
+                            navigate(`/chat/${notif.matchId}`);
+                          } else {
+                            navigate('/matches');
+                          }
                         } else if (notif.type === 'message') {
-                          navigate('/matches');
+                          // Navegar para o chat específico se houver matchId
+                          if (notif.matchId) {
+                            navigate(`/chat/${notif.matchId}`);
+                          } else {
+                            navigate('/matches');
+                          }
                         }
                       }}
                       sx={{
@@ -253,11 +277,23 @@ function Dashboard() {
                           {notif.time}
                         </Typography>
                       </Box>
+                      {!notif.read && (
+                        <IconButton
+                          size="small"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleMarkAsRead(notif.id);
+                          }}
+                          sx={{ ml: 1 }}
+                        >
+                          <CheckCircleIcon fontSize="small" />
+                        </IconButton>
+                      )}
                     </MenuItem>
                   ))
                 )}
                 <Divider />
-                <MenuItem onClick={() => { 
+                <MenuItem onClick={async () => { 
                   setNotifMenu(null);
                   navigate('/notifications');
                 }}>
@@ -265,6 +301,24 @@ function Dashboard() {
                     {t('dashboard.viewAll')}
                   </Typography>
                 </MenuItem>
+                {notifications.some(n => !n.read) && (
+                  <>
+                    <Divider />
+                    <MenuItem onClick={async () => {
+                      try {
+                        await axios.post('/notifications/read-all');
+                        setNotifications(notifications.map(n => ({ ...n, read: true })));
+                        setNotifMenu(null);
+                      } catch (error) {
+                        console.error('Error marking all as read:', error);
+                      }
+                    }}>
+                      <Typography variant="body2" color="text.secondary" align="center" sx={{ width: '100%' }}>
+                        {t('dashboard.markAllAsRead')}
+                      </Typography>
+                    </MenuItem>
+                  </>
+                )}
               </Menu>
 
               {/* Avatar e Menu */}
